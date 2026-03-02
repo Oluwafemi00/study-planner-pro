@@ -5,38 +5,42 @@
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 ![PWA](https://img.shields.io/badge/PWA-5A0FC8.svg?style=for-the-badge&logo=pwa&logoColor=white)
 
-A vanilla JavaScript productivity application designed to help users manage tasks, prioritize goals, and maintain focus using the Pomodoro technique. Fully installable as a Progressive Web App (PWA).
+A vanilla JavaScript web application to help users manage tasks, organize priorities, and stay focused using the Pomodoro technique. Installable as a Progressive Web App (PWA) on desktop and mobile.
 
-**[🌍 View Live Demo Here](https://oluwafemi00.github.io/study-planner-pro/)**
+**[🌍 Live Demo](https://oluwafemi00.github.io/study-planner-pro/)**
 
 ---
 
 ## Key Features
 
-- **Offline-First Architecture:** Built as a Progressive Web App (PWA) with a custom Service Worker and Manifest, allowing native installation on desktop and mobile devices.
-- **Persistent State Management:** Utilizes the browser's `localStorage` API to ensure tasks, theme preferences, and configurations survive browser refreshes.
-- **Drag-and-Drop UI:** Implements the HTML5 Drag-and-Drop API for frictionless, manual task reordering.
-- **Smart Sorting Engine:** An algorithmic sort feature that automatically bubbles high-priority and overdue tasks to the top of the queue.
-- **Integrated Pomodoro Timer:** A built-in 25-minute focus timer to encourage structured study sessions without relying on third-party tools.
-- **Real-Time Filtering & Search:** Instantly locate tasks using the dynamic search bar or toggle between Pending and Completed states.
-- **Print/Export Ready:** Custom `@media print` CSS rules allow users to instantly generate clean, distraction-free PDF schedules.
+- **Offline Support:** Built as a PWA with a Service Worker and Manifest for native installation and offline use.
+- **Persistent Data:** Uses the browser’s `localStorage` to save tasks, theme, and settings across sessions.
+- **Drag-and-Drop Tasks:** HTML5 Drag-and-Drop API lets users reorder tasks easily.
+- **Priority Sorting:** High-priority and overdue tasks automatically move to the top.
+- **Pomodoro Timer:** Built-in 25-minute focus timer to encourage structured study sessions.
+- **Search & Filter:** Quickly find tasks with dynamic search or toggle between Pending and Completed tasks.
+- **Print-Friendly:** CSS rules for printing allow users to create clean PDF schedules.
 
-## Architectural Decisions
+---
 
-This project was intentionally built without heavy frontend frameworks (like React or Vue) to solidify core JavaScript fundamentals and DOM manipulation techniques.
+## Architecture & Decisions
 
-- **Data Flow:** The application follows a strictly unidirectional data flow. All user interactions (add, edit, toggle, delete, reorder) mutate a central `tasks` array acting as the single source of truth, which then triggers a DOM re-render (`renderTasks()`).
-- **Event Delegation & Propagation:** Utilizes `event.stopPropagation()` to handle nested click events (e.g., clicking a 'Delete' button inside a 'Toggle Complete' container) without triggering unintended state changes.
-- **CSS Variables (Custom Properties):** Theming is managed entirely via CSS variables mapped to the `:root` pseudo-class, allowing for a highly performant, single-class toggle (`.dark-mode`) on the `<body>` element.
+This project was intentionally built **without frameworks** (like React or Vue) to strengthen core JavaScript skills and DOM manipulation.
 
-## Installation & Local Development
+- **Single Source of Truth:** All tasks are stored in a central `tasks` array. Any changes (add, edit, complete, delete, reorder) trigger a DOM re-render with `renderTasks()`.
+- **Event Handling:** Uses `event.stopPropagation()` for nested actions, preventing unintended state changes.
+- **Theming with CSS Variables:** Dark and light modes are handled with CSS variables on `:root`, toggled using a single `.dark-mode` class on `<body>`.
 
-Since this app relies purely on native web technologies, no build step or package manager is required.
+---
+
+## Installation & Local Setup
+
+No build tools or package managers are needed — it runs with just HTML, CSS, and JavaScript.
 
 1. Clone the repository:
 
    ```bash
-   git clone [https://github.com/oluwafemi00/study-planner-pro.git](https://github.com/oluwafemi00/study-planner-pro.git)
+     git clone https://github.com/oluwafemi00/study-planner-pro.git
    ```
 
 2. Navigate to the directory:
