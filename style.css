@@ -401,12 +401,12 @@ li.drag-over {
 
 /* For Chrome, Edge, and Safari */
 ::-webkit-scrollbar {
-  width: 8px; /* Width of the vertical scrollbar */
-  height: 8px; /* Height of the horizontal scrollbar */
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent; /* Keeps the track invisible for a cleaner look */
+  background: transparent;
   border-radius: 10px;
 }
 
@@ -420,7 +420,6 @@ li.drag-over {
   background-color: var(--secondary-text);
 }
 
-/* Optional: Make the task list itself scrollable if it gets too long */
 #task-list {
   max-height: 50vh; /* Takes up 50% of the viewport height */
   overflow-y: auto;
