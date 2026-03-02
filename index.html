@@ -3,26 +3,88 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Study Planner</title>
+    <title>Study Planner Pro</title>
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#4f46e5" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div class="theme-toggle">
+      <button id="theme-btn" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+    </div>
+
     <div class="container">
+      <div class="pomodoro">
+        <div id="timer-display">25:00</div>
+        <div class="timer-controls">
+          <button id="start-btn" onclick="toggleTimer()">Start</button>
+          <button id="reset-btn" onclick="resetTimer()">Reset</button>
+        </div>
+      </div>
+
       <h1>Study Planner</h1>
 
       <form id="study-form">
         <input
           type="text"
           id="task-input"
-          placeholder="What are you studying?"
+          placeholder="What are you studying today?"
           required
         />
-        <input type="date" id="date-input" required />
-        <button type="submit">Add Task</button>
+        <div class="row">
+          <input type="date" id="date-input" required />
+          <select id="priority-input">
+            <option value="low">Low Priority</option>
+            <option value="medium" selected>Medium Priority</option>
+            <option value="high">High Priority</option>
+          </select>
+        </div>
+        <button type="submit" class="add-btn">Add Task</button>
       </form>
 
+      <div class="filter-container">
+        <button class="filter-btn active" onclick="setFilter('all')">
+          All
+        </button>
+        <button class="filter-btn" onclick="setFilter('pending')">
+          Pending
+        </button>
+        <button class="filter-btn" onclick="setFilter('completed')">
+          Completed
+        </button>
+      </div>
+
       <ul id="task-list"></ul>
+
+      <div class="bottom-actions">
+        <button id="smart-sort" onclick="autoSortTasks()">✨ Smart Sort</button>
+        <button id="export-pdf" onclick="exportToPDF()">🖨️ Export PDF</button>
+        <button id="clear-completed" onclick="clearCompleted()">
+          🗑️ Clear Finished
+        </button>
+      </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="script.js"></script>
+    <script>
+      // Register the Service Worker
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("./sw.js")
+            .then((reg) => console.log("Service Worker registered!", reg))
+            .catch((err) =>
+              console.error("Service Worker registration failed:", err),
+            );
+        });
+      }
+    </script>
   </body>
 </html>
