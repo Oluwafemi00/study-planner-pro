@@ -390,3 +390,39 @@ li.drag-over {
     break-inside: avoid;
   }
 }
+
+/* --- Custom Scrollbar Styling --- */
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+
+/* For Chrome, Edge, and Safari */
+::-webkit-scrollbar {
+  width: 8px; /* Width of the vertical scrollbar */
+  height: 8px; /* Height of the horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* Keeps the track invisible for a cleaner look */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: 10px;
+  border: 2px solid var(--bg-color); /* Creates a "padding" effect around the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--secondary-text);
+}
+
+/* Optional: Make the task list itself scrollable if it gets too long */
+#task-list {
+  max-height: 50vh; /* Takes up 50% of the viewport height */
+  overflow-y: auto;
+  padding-right: 5px; /* Prevents the scrollbar from overlapping your delete buttons */
+}
