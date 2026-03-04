@@ -27,68 +27,129 @@ window.toggleDarkMode = () => {
 
   localStorage.setItem("theme", isDark ? "dark" : "light");
 };
+// --- 3. POMODORO TIMER LOGIC & SETTINGS ---
+const timerSound = new Audio("notification.mp3");
 
-// --- 3. POMODORO TIMER LOGIC ---
+// Load settings from localStorage or use defaults
+let settings = JSON.parse(localStorage.getItem("pomodoroSettings")) || {
+  work: 25,
+  break: 5,
+  soundEnabled: true,
+};
 
 let timer;
-
-let timeLeft = 25 * 60;
-
+let currentMode = "work"; // Tracks if we are working or on a break
+let timeLeft = settings.work * 60;
 let isRunning = false;
+
+// Initialize Timer Display on Load
+displayTime();
 
 window.toggleTimer = () => {
   const btn = document.getElementById("start-btn");
-
   if (isRunning) {
     clearInterval(timer);
-
     btn.innerText = "Start";
   } else {
     timer = setInterval(updateTimer, 1000);
-
     btn.innerText = "Pause";
   }
-
   isRunning = !isRunning;
 };
 
 function updateTimer() {
   if (timeLeft <= 0) {
     clearInterval(timer);
+    isRunning = false;
 
-    alert("Focus session complete! Take a break.");
+    // Play sound
+    if (settings.soundEnabled) {
+      timerSound.play().catch((e) => console.log("Audio play failed:", e));
+    }
 
-    resetTimer();
+    // Trigger Custom Modal instead of native alert
+    if (currentMode === "work") {
+      showTimerAlert(
+        "🎉 Great Job!",
+        "Focus session complete! Time for a break.",
+      );
+      currentMode = "break";
+      timeLeft = settings.break * 60;
+    } else {
+      showTimerAlert("⏰ Break's Over!", "Ready to focus again?");
+      currentMode = "work";
+      timeLeft = settings.work * 60;
+    }
 
+    displayTime();
+    document.getElementById("start-btn").innerText = "Start";
     return;
   }
-
   timeLeft--;
-
   displayTime();
 }
 
+// --- TIMER ALERT MODAL LOGIC ---
+window.showTimerAlert = (title, message) => {
+  document.getElementById("timer-alert-title").innerText = title;
+  document.getElementById("timer-alert-message").innerText = message;
+  document.getElementById("timer-alert-modal").style.display = "flex";
+};
+
+window.closeTimerAlert = () => {
+  document.getElementById("timer-alert-modal").style.display = "none";
+};
+
 function displayTime() {
   const minutes = Math.floor(timeLeft / 60);
-
   const seconds = timeLeft % 60;
 
-  document.getElementById("timer-display").innerText =
-    `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  // Update the text
+  const timeString = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  document.getElementById("timer-display").innerText = timeString;
+
+  //Update the browser tab title so you can see the timer while in other tabs
+  document.title = `${timeString} - ${currentMode === "work" ? "Focus" : "Break"}`;
 }
 
 window.resetTimer = () => {
   clearInterval(timer);
-
-  timeLeft = 25 * 60;
-
+  currentMode = "work";
+  timeLeft = settings.work * 60;
   isRunning = false;
-
   displayTime();
-
   document.getElementById("start-btn").innerText = "Start";
+  document.title = "Study Planner Pro";
 };
 
+// --- SETTINGS MODAL LOGIC ---
+window.openSettings = () => {
+  document.getElementById("work-duration").value = settings.work;
+  document.getElementById("break-duration").value = settings.break;
+  document.getElementById("sound-toggle").checked = settings.soundEnabled;
+  document.getElementById("settings-modal").style.display = "flex";
+};
+
+window.closeSettings = () => {
+  document.getElementById("settings-modal").style.display = "none";
+};
+
+window.saveSettings = () => {
+  // Grab values from inputs
+  const newWork =
+    parseInt(document.getElementById("work-duration").value) || 25;
+  const newBreak =
+    parseInt(document.getElementById("break-duration").value) || 5;
+  const newSound = document.getElementById("sound-toggle").checked;
+
+  // Update settings object and save to storage
+  settings = { work: newWork, break: newBreak, soundEnabled: newSound };
+  localStorage.setItem("pomodoroSettings", JSON.stringify(settings));
+
+  // Instantly apply settings to the timer
+  resetTimer();
+  closeSettings();
+};
 // --- 4. TASK CRUD OPERATIONS ---
 
 // Enter Edit Mode

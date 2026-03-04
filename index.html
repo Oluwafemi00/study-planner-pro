@@ -1,3 +1,4 @@
+<!doctype html>
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -20,7 +21,8 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="theme-toggle">
+    <div class="top-controls">
+      <button id="settings-btn" onclick="openSettings()">⚙️ Settings</button>
       <button id="theme-btn" onclick="toggleDarkMode()">🌙 Dark Mode</button>
     </div>
 
@@ -76,6 +78,51 @@
       </div>
     </div>
 
+    <div id="settings-modal" class="modal-overlay">
+      <div class="modal-content">
+        <h2>Timer Settings</h2>
+
+        <div class="setting-group">
+          <label for="work-duration">Work Duration (min):</label>
+          <input type="number" id="work-duration" min="1" max="120" />
+        </div>
+
+        <div class="setting-group">
+          <label for="break-duration">Break Duration (min):</label>
+          <input type="number" id="break-duration" min="1" max="60" />
+        </div>
+
+        <div class="setting-group toggle-group">
+          <label for="sound-toggle">Play Notification Sound:</label>
+          <input type="checkbox" id="sound-toggle" />
+        </div>
+
+        <div class="modal-actions">
+          <button onclick="closeSettings()" class="cancel-btn">Cancel</button>
+          <button onclick="saveSettings()" class="save-btn">Save</button>
+        </div>
+      </div>
+    </div>
+    <div id="timer-alert-modal" class="modal-overlay">
+      <div class="modal-content" style="text-align: center">
+        <h2 id="timer-alert-title">⏰ Time's Up!</h2>
+        <p
+          id="timer-alert-message"
+          style="
+            margin-bottom: 25px;
+            color: var(--secondary-text);
+            font-size: 1.1rem;
+          "
+        ></p>
+        <button
+          onclick="closeTimerAlert()"
+          class="save-btn"
+          style="width: 100%; padding: 12px; font-size: 1rem"
+        >
+          Got it!
+        </button>
+      </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="script.js"></script>
     <script>

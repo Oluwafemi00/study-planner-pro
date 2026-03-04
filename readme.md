@@ -18,7 +18,8 @@ A vanilla JavaScript web application to help users manage tasks, organize priori
 - **Drag-and-Drop Tasks:** HTML5 Drag-and-Drop API lets users reorder tasks easily.
 - **Priority Sorting:** High-priority and overdue tasks automatically move to the top.
 - **Pomodoro Timer:** Built-in 25-minute focus timer to encourage structured study sessions.
-- **Search & Filter:** Quickly find tasks with dynamic search or toggle between Pending and Completed tasks.
+- **Search & Filter:** Quickly Toggle between Pending and Completed tasks.
+- **Notification:** Sound notification for completed session.
 - **Print-Friendly:** CSS rules for printing allow users to create clean PDF schedules.
 
 ---
